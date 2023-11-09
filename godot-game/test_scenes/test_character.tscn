@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dquxaciijncrl"]
+
+[ext_resource type="Texture2D" uid="uid://d17mrta718uf7" path="res://icon.svg" id="1_xg70b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h4qkn"]
+
+[node name="Test_Character" type="Node2D"]
+
+[node name="HealthComponent" type="HealthComponent" parent="."]
+
+[node name="PlayerMovementComponent" type="PlayerMovementComponent" parent="."]
+base_movespeed = 100.0
+base_jumpspeed = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerMovementComponent"]
+shape = SubResource("CircleShape2D_h4qkn")
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerMovementComponent"]
+texture = ExtResource("1_xg70b")
