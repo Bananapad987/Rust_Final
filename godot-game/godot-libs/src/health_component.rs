@@ -6,9 +6,6 @@ struct HealthComponent {
     #[export]
     max_health: i32,
     curr_health: i32,
-
-    #[base]
-    base: Base<Node2D>,
 }
 #[godot_api]
 impl HealthComponent {
@@ -20,20 +17,14 @@ impl HealthComponent {
 
 #[godot_api]
 impl Node2DVirtual for HealthComponent {
-    fn init(base : Base<Node2D>) -> Self {
+    fn init(_base : Base<Node2D>) -> Self {
         HealthComponent {
             max_health : 0,
             curr_health : 0,
-            base,
         }
     }
 
     fn ready(&mut self) {
         self.curr_health = self.max_health;
-    }
-
-    fn process(&mut self, delta : f64) {
-        godot_print!("{}", self.curr_health.to_string());
-        self.damage(1);
     }
 }

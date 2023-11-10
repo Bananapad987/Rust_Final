@@ -12,6 +12,12 @@ struct PlayerMovementComponent {
     base_jumpspeed : f32,
     curr_jumpspeed : f32,
 
+    #[export]
+    base_fallspeed : f32,
+
+    #[export]
+    max_fallspeed : f32,
+
     allow_move : bool,
 
     #[base]
@@ -30,6 +36,8 @@ impl CharacterBody2DVirtual for PlayerMovementComponent {
             curr_movespeed : 0.0,
             base_jumpspeed : 0.0,
             curr_jumpspeed : 0.0,
+            base_fallspeed : 0.0,
+            max_fallspeed : 0.0,
             allow_move : false,
             base,
         }
@@ -40,26 +48,31 @@ impl CharacterBody2DVirtual for PlayerMovementComponent {
         self.curr_jumpspeed = self.base_jumpspeed;
     }
 
-    fn physics_process(&mut self, delta: f64) {
-        let mut direction_vector = Vector2::ZERO;
+    fn physics_process(&mut self, _delta: f64) {
+        let velocity = self.base.get_velocity();
+        let mut new_x_velocity = 0.0;
+        let mut new_y_velocity = velocity.y;
+
+        if !self.base.is_on_floor() {
+            new_y_velocity += 20.0;
+        }
 
         let input = Input::singleton();
         if input.is_action_pressed("move_right".into()) {
-            direction_vector += Vector2::RIGHT;
+            new_x_velocity = self.curr_movespeed;
         }
         if input.is_action_pressed("move_left".into()) {
-            direction_vector += Vector2::LEFT;
+            new_x_velocity = - self.curr_movespeed;
         }
 
-        if input.is_action_pressed("move_up".into()) {
-            direction_vector -= Vector2::UP;
+        if input.is_action_pressed("move_up".into()) && self.base.is_on_floor() {
+            new_y_velocity -= self.curr_jumpspeed;
         }
-        if input.is_action_pressed("move_down".into()) {
-            direction_vector -= Vector2::DOWN;
+        if input.is_action_pressed("move_down".into()) && new_y_velocity < self.max_fallspeed {
+            new_y_velocity += self.base_fallspeed;
         }
 
-        let velocity = self.base.get_velocity();
-        let new_velocity = Vector2::new(direction_vector.x * self.curr_movespeed, velocity.y + 9.0 - (direction_vector.y * self.curr_jumpspeed));
+        let new_velocity = Vector2::new(new_x_velocity, new_y_velocity);
 
         self.base.set_velocity(new_velocity);
         self.base.move_and_slide();
