@@ -1,5 +1,4 @@
 use godot::prelude::*;
-use std::ops::Deref;
 
 struct RustFinal;
 

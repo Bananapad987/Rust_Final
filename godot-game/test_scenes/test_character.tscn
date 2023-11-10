@@ -1,19 +1,106 @@
-[gd_scene load_steps=3 format=3 uid="uid://dquxaciijncrl"]
+[gd_scene load_steps=13 format=3 uid="uid://dquxaciijncrl"]
 
-[ext_resource type="Texture2D" uid="uid://d17mrta718uf7" path="res://icon.svg" id="1_xg70b"]
+[ext_resource type="Texture2D" uid="uid://cgesk8h0pvjqd" path="res://test_sprites/Assassin Idle-Sheet.png" id="1_p5dwl"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_h4qkn"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3wt01"]
+size = Vector2(49, 119)
+
+[sub_resource type="Animation" id="Animation_vural"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_whskw"]
+resource_name = "player_idle"
+length = 1.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cci48"]
+_data = {
+"RESET": SubResource("Animation_vural"),
+"player_idle": SubResource("Animation_whskw")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7lpwu"]
+animation = &"player_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vspcn"]
+animation = &"player_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2588w"]
+animation = &"player_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_k3g6v"]
+animation = &"player_idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_4t4j5"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_7lpwu")
+blend_point_0/pos = Vector2(1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_vspcn")
+blend_point_1/pos = Vector2(0, 1.1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_2588w")
+blend_point_2/pos = Vector2(0, -1.1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_k3g6v")
+blend_point_3/pos = Vector2(-1, 0)
+min_space = Vector2(-1, -1.1)
+max_space = Vector2(1, 1.1)
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uya60"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_xaftc"]
+states/End/position = Vector2(765, 100)
+states/Idle/node = SubResource("AnimationNodeBlendSpace2D_4t4j5")
+states/Idle/position = Vector2(392, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_uya60")]
 
 [node name="Test_Character" type="Node2D"]
 
 [node name="HealthComponent" type="HealthComponent" parent="."]
 
 [node name="PlayerMovementComponent" type="PlayerMovementComponent" parent="."]
-base_movespeed = 100.0
-base_jumpspeed = 100.0
+base_movespeed = 500.0
+base_jumpspeed = 700.0
+base_fallspeed = 100.0
+max_fallspeed = 500.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerMovementComponent"]
-shape = SubResource("CircleShape2D_h4qkn")
+position = Vector2(20, 0)
+shape = SubResource("RectangleShape2D_3wt01")
 
 [node name="Sprite2D" type="Sprite2D" parent="PlayerMovementComponent"]
-texture = ExtResource("1_xg70b")
+texture = ExtResource("1_p5dwl")
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerMovementComponent"]
+libraries = {
+"": SubResource("AnimationLibrary_cci48")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="PlayerMovementComponent"]
+tree_root = SubResource("AnimationNodeStateMachine_xaftc")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/Idle/blend_position = Vector2(0.992, 0.0153847)
