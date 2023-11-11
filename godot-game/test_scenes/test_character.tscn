@@ -6,7 +6,8 @@
 size = Vector2(49, 119)
 
 [sub_resource type="Animation" id="Animation_vural"]
-length = 0.001
+length = 1.2
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -14,10 +15,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1.05),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
 [sub_resource type="Animation" id="Animation_whskw"]
@@ -78,8 +79,6 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 
 [node name="Test_Character" type="Node2D"]
 
-[node name="HealthComponent" type="HealthComponent" parent="."]
-
 [node name="PlayerMovementComponent" type="PlayerMovementComponent" parent="."]
 base_movespeed = 500.0
 base_jumpspeed = 700.0
@@ -104,3 +103,13 @@ tree_root = SubResource("AnimationNodeStateMachine_xaftc")
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/Idle/blend_position = Vector2(0.992, 0.0153847)
+
+[node name="HitBoxComponent" type="HitBoxComponent" parent="PlayerMovementComponent" node_paths=PackedStringArray("health_component")]
+health_component = NodePath("../../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerMovementComponent/HitBoxComponent"]
+position = Vector2(20, 0)
+shape = SubResource("RectangleShape2D_3wt01")
+
+[node name="HealthComponent" type="HealthComponent" parent="."]
+max_health = 200
