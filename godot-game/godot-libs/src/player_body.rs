@@ -1,9 +1,11 @@
 use godot::prelude::*;
-use godot::engine::{CharacterBody2D, CharacterBody2DVirtual};
+use godot::engine::*;
+use crate::health_component::HealthComponent;
+use crate::attack_struct::Attack;
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
-struct PlayerMovementComponent {
+pub struct PlayerBody {
     #[export]
     base_movespeed : f32,
     curr_movespeed : f32,
@@ -18,27 +20,31 @@ struct PlayerMovementComponent {
     #[export]
     max_fallspeed : f32,
 
-    allow_move : bool,
+    #[export()]
+    health_component : Gd<HealthComponent>,
 
     #[base]
     base: Base<CharacterBody2D>,
 }
 
 #[godot_api]
-impl PlayerMovementComponent {
+impl PlayerBody {
+    pub fn damage(&mut self, attack : Attack) {
+        self.health_component.bind_mut().take_damage(attack.damage);
+    }
 }
 
 #[godot_api]
-impl CharacterBody2DVirtual for PlayerMovementComponent {
+impl CharacterBody2DVirtual for PlayerBody {
     fn init(base: Base<CharacterBody2D>) -> Self {
-        PlayerMovementComponent {
+        PlayerBody {
             base_movespeed : 0.0,
             curr_movespeed : 0.0,
             base_jumpspeed : 0.0,
             curr_jumpspeed : 0.0,
             base_fallspeed : 0.0,
             max_fallspeed : 0.0,
-            allow_move : false,
+            health_component : Gd::new_default(),
             base,
         }
     }
