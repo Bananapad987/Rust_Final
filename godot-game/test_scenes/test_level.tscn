@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://db362hfqwigi2"]
 
 [ext_resource type="PackedScene" uid="uid://dquxaciijncrl" path="res://test_scenes/test_character.tscn" id="1_1sads"]
-[ext_resource type="Texture2D" uid="uid://r1l3vttnfs7m" path="res://test_sprites/Map_one_tileset.png.png" id="2_8a6ck"]
+[ext_resource type="Texture2D" uid="uid://cmujeuytan25f" path="res://test_sprites/Map_one_tileset.png.png" id="2_8a6ck"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d2qqe"]
 texture = ExtResource("2_8a6ck")
@@ -232,9 +232,9 @@ sources/0 = SubResource("TileSetAtlasSource_d2qqe")
 
 [node name="Test_Character" parent="." instance=ExtResource("1_1sads")]
 
-[node name="Camera2D" type="Camera2D" parent="Test_Character"]
-
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_bogdb")
 format = 2
 layer_0/tile_data = PackedInt32Array(131070, 327680, 0, 131071, 393216, 0, 65536, 327680, 0, 65537, 458752, 0, 131069, 393216, 0, 131068, 327680, 0, 131067, 393216, 0, 131066, 262144, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]
