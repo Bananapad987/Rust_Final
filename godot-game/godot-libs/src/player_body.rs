@@ -1,7 +1,9 @@
 use godot::prelude::*;
 use godot::engine::*;
+use crate::health_component;
 use crate::health_component::HealthComponent;
 use crate::attack_struct::Attack;
+use std::ops::*;
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
@@ -20,9 +22,6 @@ pub struct PlayerBody {
     #[export]
     max_fallspeed : f32,
 
-    #[export()]
-    health_component : Gd<HealthComponent>,
-
     #[base]
     base: Base<CharacterBody2D>,
 }
@@ -30,7 +29,40 @@ pub struct PlayerBody {
 #[godot_api]
 impl PlayerBody {
     pub fn damage(&mut self, attack : Attack) {
-        self.health_component.bind_mut().take_damage(attack.damage);
+        if let Some(node) = self.base.get_node("./HealthComponent".into()) {
+            if let Some(mut health_component) = node.clone().try_cast::<HealthComponent>() {
+                health_component.bind_mut().take_damage(attack.damage);
+            }
+        }
+    }
+
+    fn update_animation(&mut self) {
+        if let Some(node) = self.base.get_node("./AnimationTree".into()) {
+            if let Some(mut animation_tree) = node.clone().try_cast::<AnimationTree>() {
+                if self.base.get_velocity() == Vector2::ZERO {
+                    animation_tree.set("parameters/conditions/is_idle".into(), true.to_variant());
+                    animation_tree.set("parameters/conditions/is_moving".into(), false.to_variant());
+                } else {
+                    animation_tree.set("parameters/conditions/is_idle".into(), false.to_variant());
+                    animation_tree.set("parameters/conditions/is_moving".into(), true.to_variant());
+                }
+
+                let input = Input::singleton();
+
+                if input.is_action_just_pressed("basic_attack".into()) {
+                    animation_tree.set("parameters/conditions/is_attacking".into(), true.to_variant());
+                    animation_tree.set("parameters/conditions/is_moving".into(), false.to_variant());
+                    animation_tree.set("parameters/conditions/is_idle".into(), false.to_variant());
+                } else {
+                    animation_tree.set("parameters/conditions/is_attacking".into(), false.to_variant());
+                }
+
+                let curr_velocity = self.base.get_velocity();
+                animation_tree.set("parameters/Idle/blend_position".into(), curr_velocity.to_variant());
+                animation_tree.set("parameters/Move/blend_position".into(), curr_velocity.to_variant());
+                animation_tree.set("parameters/Basic_Attack/blend_position".into(), curr_velocity.to_variant());
+            }
+        }
     }
 }
 
@@ -44,7 +76,6 @@ impl CharacterBody2DVirtual for PlayerBody {
             curr_jumpspeed : 0.0,
             base_fallspeed : 0.0,
             max_fallspeed : 0.0,
-            health_component : Gd::new_default(),
             base,
         }
     }
@@ -82,5 +113,9 @@ impl CharacterBody2DVirtual for PlayerBody {
 
         self.base.set_velocity(new_velocity);
         self.base.move_and_slide();
+    }
+
+    fn process(&mut self, delta : f64) {
+        self.update_animation();
     }
 }
