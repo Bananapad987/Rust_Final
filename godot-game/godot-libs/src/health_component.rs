@@ -1,5 +1,4 @@
 use godot::prelude::*;
-use crate::movement_component;
 
 #[derive(GodotClass)]
 #[class(base=Node2D)]
