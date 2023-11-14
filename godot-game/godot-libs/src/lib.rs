@@ -9,3 +9,4 @@ mod health_component;
 mod player_body;
 mod attack_struct;
 mod basic_attack;
+mod player_animation;

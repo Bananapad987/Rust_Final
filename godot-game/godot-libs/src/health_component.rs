@@ -1,5 +1,4 @@
 use godot::prelude::*;
-use crate::player_body;
 
 #[derive(GodotClass)]
 #[class(base=Node2D)]
