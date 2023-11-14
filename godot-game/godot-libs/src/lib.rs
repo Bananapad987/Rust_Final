@@ -6,4 +6,6 @@ struct RustFinal;
 unsafe impl ExtensionLibrary for RustFinal {}
 
 mod health_component;
-mod movement_component;
+mod player_body;
+mod attack_struct;
+mod basic_attack;

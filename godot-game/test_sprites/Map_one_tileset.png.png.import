@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgesk8h0pvjqd"
-path="res://.godot/imported/Assassin Idle-Sheet.png-12eb01860b9976e71dd2149f8fab0918.ctex"
+uid="uid://cmujeuytan25f"
+path="res://.godot/imported/Map_one_tileset.png.png-86b911cf462ce4cfa80d19bb287b1bf0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://test_sprites/Assassin Idle-Sheet.png"
-dest_files=["res://.godot/imported/Assassin Idle-Sheet.png-12eb01860b9976e71dd2149f8fab0918.ctex"]
+source_file="res://test_sprites/Map_one_tileset.png.png"
+dest_files=["res://.godot/imported/Map_one_tileset.png.png-86b911cf462ce4cfa80d19bb287b1bf0.ctex"]
 
 [params]
 

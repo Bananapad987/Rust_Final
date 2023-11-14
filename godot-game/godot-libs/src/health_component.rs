@@ -1,16 +1,17 @@
 use godot::prelude::*;
+use crate::movement_component;
 
 #[derive(GodotClass)]
 #[class(base=Node2D)]
-struct HealthComponent {
+pub struct HealthComponent {
     #[export]
-    max_health: i32,
-    curr_health: i32,
+    pub max_health: i32,
+    pub curr_health: i32,
 }
+
 #[godot_api]
 impl HealthComponent {
-    #[func]
-    fn damage(&mut self, damage : i32) {
+    pub fn take_damage(&mut self, damage : i32) {
         self.curr_health -= damage;
     }
 }
