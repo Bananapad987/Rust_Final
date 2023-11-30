@@ -231,11 +231,9 @@ sources/0 = SubResource("TileSetAtlasSource_d2qqe")
 [node name="Test_Scene" type="Node2D"]
 
 [node name="Test_Character" parent="." instance=ExtResource("1_1sads")]
-position = Vector2(-210, -12)
+position = Vector2(0, 0)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_bogdb")
 format = 2
 layer_0/tile_data = PackedInt32Array(131070, 327680, 0, 131071, 393216, 0, 65536, 327680, 0, 65537, 458752, 0, 131069, 393216, 0, 131068, 327680, 0, 131067, 393216, 0, 131066, 262144, 0)
-
-[node name="Camera2D" type="Camera2D" parent="."]

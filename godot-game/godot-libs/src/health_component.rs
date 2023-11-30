@@ -10,6 +10,7 @@ pub struct HealthComponent {
 
 #[godot_api]
 impl HealthComponent {
+    #[func]
     pub fn take_damage(&mut self, damage : i32) {
         self.curr_health -= damage;
     }
