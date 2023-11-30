@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://pqa5y1f0cfmc" path="res://test_sprites/AssassinAttackBasic-Sheet.png" id="4_odjad"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wt01"]
-size = Vector2(39, 118.5)
+size = Vector2(20, 49)
 
 [sub_resource type="Animation" id="Animation_a80pq"]
 length = 0.001
@@ -116,25 +116,13 @@ tracks/2/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
 }
-tracks/3/type = "value"
+tracks/3/type = "method"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerSprite:scale")
+tracks/3/path = NodePath("PlayerAnimation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2.5, 2.5)]
-}
-tracks/4/type = "method"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerAnimation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "times": PackedFloat32Array(0.42),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -142,13 +130,13 @@ tracks/4/keys = {
 "method": &"set"
 }]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Attack/AttackArea:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Attack/AttackArea:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0.12, 0.24),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
@@ -194,18 +182,6 @@ tracks/2/keys = {
 "update": 1,
 "values": [1]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerSprite:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2.5, 2.5)]
-}
 
 [sub_resource type="Animation" id="Animation_gjgvq"]
 resource_name = "idle"
@@ -247,18 +223,6 @@ tracks/2/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerSprite:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2.5, 2.5)]
-}
 
 [sub_resource type="Animation" id="Animation_kgomm"]
 resource_name = "jumping"
@@ -298,18 +262,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerSprite:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2.5, 2.5)]
 }
 
 [sub_resource type="Animation" id="Animation_t4mqy"]
@@ -355,22 +307,10 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PlayerSprite:scale")
+tracks/3/path = NodePath("PlayerSprite:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(2.5, 2.5)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("PlayerSprite:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -500,18 +440,20 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(0, 13.1382)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bbnat"]
-size = Vector2(195, 75)
+size = Vector2(164.371, 33.2763)
 
 [node name="Test_Character" type="Node2D"]
 position = Vector2(-15, 0)
 
 [node name="PlayerBody" type="PlayerBody" parent="."]
 base_movespeed = 500.0
-base_jumpspeed = 700.0
+base_jumpspeed = 500.0
 base_fallspeed = 100.0
 max_fallspeed = 500.0
+scale = Vector2(1.00355, 1)
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="PlayerBody"]
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_3wt01")
 
 [node name="HealthComponent" type="HealthComponent" parent="PlayerBody"]
@@ -523,7 +465,7 @@ libraries = {
 }
 
 [node name="PlayerSprite" type="Sprite2D" parent="PlayerBody"]
-scale = Vector2(2.5, 2.5)
+scale = Vector2(1.00927, 1.03889)
 texture = ExtResource("4_odjad")
 hframes = 9
 
@@ -545,5 +487,9 @@ knockback = 2
 position = Vector2(0, 12.5)
 
 [node name="AttackArea" type="CollisionShape2D" parent="PlayerBody/Attack"]
-position = Vector2(47.5, 0)
+position = Vector2(19, -7.12762)
+scale = Vector2(0.486703, 0.951336)
 shape = SubResource("RectangleShape2D_bbnat")
+
+[node name="Camera2D" type="Camera2D" parent="PlayerBody"]
+zoom = Vector2(3, 3)
