@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://pqa5y1f0cfmc" path="res://test_sprites/AssassinAttackBasic-Sheet.png" id="4_odjad"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wt01"]
-size = Vector2(16, 44)
+size = Vector2(19.9293, 47)
 
 [sub_resource type="Animation" id="Animation_a80pq"]
 length = 0.001
@@ -497,7 +497,7 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(0, 168.6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bbnat"]
-size = Vector2(195, 75)
+size = Vector2(78.7205, 30)
 
 [node name="Test_Character" type="Node2D"]
 position = Vector2(-15, 0)
@@ -510,6 +510,7 @@ max_fallspeed = 500.0
 scale = Vector2(1.00355, 1)
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="PlayerBody"]
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_3wt01")
 
 [node name="HealthComponent" type="HealthComponent" parent="PlayerBody"]
@@ -521,7 +522,6 @@ libraries = {
 }
 
 [node name="PlayerSprite" type="Sprite2D" parent="PlayerBody"]
-scale = Vector2(2.5, 2.5)
 texture = ExtResource("4_odjad")
 hframes = 9
 
@@ -543,5 +543,8 @@ knockback = 2
 position = Vector2(0, 5)
 
 [node name="AttackArea" type="CollisionShape2D" parent="PlayerBody/Attack"]
-position = Vector2(47.5, 0)
+position = Vector2(18.4346, 0)
 shape = SubResource("RectangleShape2D_bbnat")
+
+[node name="Camera2D" type="Camera2D" parent="PlayerBody"]
+zoom = Vector2(3, 3)
