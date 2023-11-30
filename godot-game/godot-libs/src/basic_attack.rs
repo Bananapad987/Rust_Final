@@ -20,7 +20,8 @@ struct BasicAttack{
 
 #[godot_api]
 impl BasicAttack {
-    fn on_body_entered(&mut self, body : Gd<Node2D>) {
+    #[func]
+    fn on_BasicAttack_body_entered(&mut self, body : Gd<Node2D>) {
         if let Some(mut player_body) = body.clone().try_cast::<PlayerBody>() {
             let attack = Attack{damage : self.damage, knockback : self.knockback};
             player_body.bind_mut().damage(attack);
