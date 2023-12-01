@@ -1,10 +1,9 @@
 use godot::prelude::*;
-use crate::shuriken::Shuriken;
-use crate::utilities::deg_to_rad;
+use crate::rock_monster_projectile::RockMonsterProjectile;
 
 #[derive(GodotClass)]
 #[class(base=Node2D)]
-struct AbilityOne{
+struct RockMonsterAttack{
     #[export]
     damage : i32,
 
@@ -19,13 +18,13 @@ struct AbilityOne{
 }
 
 #[godot_api]
-impl AbilityOne {
+impl RockMonsterAttack {
     #[func]
-    fn throw(&mut self) {
-        let scene = load::<PackedScene>("res://test_scenes/shuriken.tscn");
+    fn shoot(&mut self) {
+        let scene = load::<PackedScene>("res://test_scenes/rock_monster_projectile.tscn");
         if let Some(marker) = self.base.get_node("ProjectileMarker".into()) {
             if let Some(node) = scene.instantiate() {
-                if let Ok(mut projectile) = node.try_cast::<Shuriken>() {
+                if let Ok(mut projectile) = node.try_cast::<RockMonsterProjectile>() {
 
                     let marker_pos: Vector2 = marker.get("global_position".into()).to();
 
@@ -36,7 +35,7 @@ impl AbilityOne {
                     if let Some(mut root_node) = self.base.get_owner() {
                         let root_pos : Vector2 = root_node.get("global_position".into()).to();
 
-                        let projectile_pos = Vector2::new(marker_pos.x - root_pos.x, marker_pos.y - root_pos.y);
+                        let projectile_pos = marker_pos - root_pos;
                         projectile.set("global_position".into(), projectile_pos.to_variant());
                         
                         root_node.add_child(projectile.upcast());
@@ -48,9 +47,9 @@ impl AbilityOne {
 }
 
 #[godot_api]
-impl INode2D for AbilityOne {
+impl INode2D for RockMonsterAttack {
     fn init(base : Base<Node2D>) -> Self {
-        AbilityOne {
+        RockMonsterAttack {
             damage : 0,
             knockback : 0.0,
             direction : Vector2::ZERO,
@@ -58,15 +57,11 @@ impl INode2D for AbilityOne {
         }
     }
 
-    fn process(&mut self, _delta : f64) {
-        let input = Input::singleton();
-        if input.is_action_pressed("move_left".into()) {
-            self.base.set("rotation".into(), deg_to_rad(180.0).to_variant());
-            self.direction = Vector2::LEFT;
-        }
-        if input.is_action_pressed("move_right".into()) {
-            self.base.set("rotation".into(), (0.0).to_variant());
-            self.direction = Vector2::RIGHT;
+    fn ready(&mut self) {
+        if let Some(projectile_marker) = self.base.get_node("ProjectileMarker".into()) {
+            let marker_pos : Vector2 = projectile_marker.get("global_position".into()).to();
+            let curr_pos : Vector2 = self.base.get("global_position".into()).to();
+            self.direction = (marker_pos - curr_pos).normalized();
         }
     }
 }

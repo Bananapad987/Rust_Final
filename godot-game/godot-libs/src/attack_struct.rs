@@ -7,8 +7,12 @@ pub struct Attack {
     #[init(default = 0)]
     pub damage : i32,
     #[var]
-    #[init(default = 0)]
-    pub knockback: i32,
+    #[init(default = 0.0)]
+    pub knockback: f32,
+
+    #[var]
+    #[init(default = Vector2::ZERO)]
+    pub direction : Vector2,
 }
 
 #[godot_api]

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://6gcknkdxeueg"]
+
+[ext_resource type="Texture2D" uid="uid://4mqfkk8ip7vi" path="res://test_sprites/RockAttackProjectile.png" id="1_wmvwb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xer40"]
+size = Vector2(30, 28)
+
+[node name="RockMonsterProjectile" type="RockMonsterProjectile"]
+speed = 700.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-5, 0)
+shape = SubResource("RectangleShape2D_xer40")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wmvwb")
+
+[node name="ProjectileTimer" type="Timer" parent="."]
+one_shot = true

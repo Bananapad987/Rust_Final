@@ -1,0 +1,203 @@
+[gd_scene load_steps=14 format=3 uid="uid://bsr6j7yqtjo31"]
+
+[ext_resource type="Texture2D" uid="uid://ggeuniqo7mhb" path="res://test_sprites/RockAttack-Sheet.png" id="1_r73b0"]
+[ext_resource type="Texture2D" uid="uid://bpxo3lk4ji5b7" path="res://test_sprites/RockIdle-Sheet.png" id="2_wlblt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifg5e"]
+size = Vector2(50, 38)
+
+[sub_resource type="Animation" id="Animation_aq36m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_2r2ot"]
+resource_name = "attack"
+length = 1.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_r73b0")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [14]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RockMonsterAttack")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"shoot"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RockMonsterAnimation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"parameters/conditions/attack", false],
+"method": &"set"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_p5r5y"]
+resource_name = "idle"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_wlblt")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ykf2v"]
+_data = {
+"RESET": SubResource("Animation_aq36m"),
+"attack": SubResource("Animation_2r2ot"),
+"idle": SubResource("Animation_p5r5y")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8nii7"]
+animation = &"attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6en3d"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0tegk"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_iy0f2"]
+advance_mode = 2
+advance_condition = &"attack"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_112oe"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_poebo"]
+states/Start/position = Vector2(213, 100)
+states/attack/node = SubResource("AnimationNodeAnimation_8nii7")
+states/attack/position = Vector2(544, 195)
+states/idle/node = SubResource("AnimationNodeAnimation_6en3d")
+states/idle/position = Vector2(433, 100)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_0tegk"), "idle", "attack", SubResource("AnimationNodeStateMachineTransition_iy0f2"), "attack", "idle", SubResource("AnimationNodeStateMachineTransition_112oe")]
+
+[node name="RockMonster" type="Node2D"]
+
+[node name="MonsterBody" type="MonsterBody" parent="."]
+base_fallspeed = 100.0
+max_fallspeed = 500.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MonsterBody"]
+position = Vector2(-1, -1)
+shape = SubResource("RectangleShape2D_ifg5e")
+
+[node name="HealthComponent" type="HealthComponent" parent="MonsterBody"]
+max_health = 500
+
+[node name="Sprite2D" type="Sprite2D" parent="MonsterBody"]
+position = Vector2(0, -4)
+texture = ExtResource("2_wlblt")
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MonsterBody"]
+libraries = {
+"": SubResource("AnimationLibrary_ykf2v")
+}
+
+[node name="RockMonsterAnimation" type="RockMonsterAnimation" parent="MonsterBody"]
+tree_root = SubResource("AnimationNodeStateMachine_poebo")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/conditions/attack = false
+
+[node name="ShootTimer" type="Timer" parent="MonsterBody/RockMonsterAnimation"]
+wait_time = 2.0
+autostart = true
+
+[node name="RockMonsterAttack" type="RockMonsterAttack" parent="MonsterBody"]
+damage = 10
+knockback = 20.0
+position = Vector2(0, 7)
+
+[node name="ProjectileMarker" type="Marker2D" parent="MonsterBody/RockMonsterAttack"]
+position = Vector2(-23, 0)
