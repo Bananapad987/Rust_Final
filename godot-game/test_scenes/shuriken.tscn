@@ -74,7 +74,9 @@ hframes = 4
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_88y5s")
 anim_player = NodePath("../AnimationPlayer")
+active = true
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true
 autostart = true

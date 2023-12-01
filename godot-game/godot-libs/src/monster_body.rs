@@ -5,7 +5,7 @@ use crate::attack_struct::Attack;
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
-pub struct PlayerBody {
+pub struct MonsterBody {
     #[export]
     base_movespeed : f32,
     curr_movespeed : f32,
@@ -25,11 +25,11 @@ pub struct PlayerBody {
 }
 
 #[godot_api]
-impl PlayerBody {
+impl MonsterBody {
     #[func]
     pub fn damage(&mut self, attack : Gd<Attack>) {
         let curr_pos = self.base.get_position();
-        let new_pos = curr_pos + Vector2::new(attack.bind().knockback * attack.bind().direction.x, attack.bind().knockback * (-attack.bind().direction.y - 0.3));
+        let new_pos = curr_pos + Vector2::new(attack.bind().knockback * attack.bind().direction.x, attack.bind().knockback * attack.bind().direction.y);
         self.base.set_position(new_pos);
 
         if let Some(node) = self.base.get_node("HealthComponent".into()) {
@@ -41,9 +41,9 @@ impl PlayerBody {
 }
 
 #[godot_api]
-impl ICharacterBody2D for PlayerBody {
+impl ICharacterBody2D for MonsterBody {
     fn init(base: Base<CharacterBody2D>) -> Self {
-        PlayerBody {
+        MonsterBody {
             base_movespeed : 0.0,
             curr_movespeed : 0.0,
             base_jumpspeed : 0.0,
@@ -57,14 +57,13 @@ impl ICharacterBody2D for PlayerBody {
     fn ready(&mut self) {
         self.curr_movespeed = self.base_movespeed;
         self.curr_jumpspeed = self.base_jumpspeed;
-        self.base.set_velocity(Vector2::ZERO);
     }
 
-    fn physics_process(&mut self, delta: f64) {
+    fn physics_process(&mut self, _delta: f64) {
         let curr_velocity = self.base.get_velocity();
         let mut new_velocity = curr_velocity;
-        let curr_pos = self.base.get_position();
-        let mut new_pos = curr_pos;
+        //let curr_pos = self.base.get_position();
+        //let mut new_pos = curr_pos;
 
         if !self.base.is_on_floor() {
             new_velocity += Vector2::new(0.0, 20.0);
@@ -72,23 +71,9 @@ impl ICharacterBody2D for PlayerBody {
             new_velocity = Vector2::new(new_velocity.x, 20.0);
         }
 
-        let input = Input::singleton();
-        if input.is_action_pressed("move_right".into()) {
-            new_pos += Vector2::new(self.curr_movespeed * delta as f32, 0.0);
-        }
-        if input.is_action_pressed("move_left".into()) {
-            new_pos -= Vector2::new(self.curr_movespeed * delta as f32, 0.0);
-        }
-
-        if input.is_action_pressed("move_up".into()) && self.base.is_on_floor() {
-            new_velocity -= Vector2::new(0.0, self.curr_jumpspeed);
-        }
-        if input.is_action_pressed("move_down".into()) && new_velocity.y < self.max_fallspeed {
-            new_velocity += Vector2::new(0.0, self.curr_jumpspeed);
-        }
-
         self.base.set_velocity(new_velocity);
-        self.base.set_position(new_pos);
+        //self.base.set_position(new_pos);
         self.base.move_and_slide();
     }
+
 }

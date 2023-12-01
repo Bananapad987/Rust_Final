@@ -1,10 +1,11 @@
-[gd_scene load_steps=42 format=3 uid="uid://dquxaciijncrl"]
+[gd_scene load_steps=46 format=3 uid="uid://dquxaciijncrl"]
 
 [ext_resource type="Texture2D" uid="uid://bb47qf6hf2nga" path="res://test_sprites/AssassinShuriken-Idle-Sheet.png" id="1_ixqcf"]
 [ext_resource type="Texture2D" uid="uid://dx1mifnvlwjiy" path="res://test_sprites/AssassinIdle-Sheet.png" id="1_p5dwl"]
 [ext_resource type="Texture2D" uid="uid://8k8tg7uknyr2" path="res://test_sprites/AssassinRun-Sheet.png" id="3_0m1wh"]
 [ext_resource type="Texture2D" uid="uid://b2g03noudc6ut" path="res://test_sprites/AssassinJump.png" id="4_he3la"]
 [ext_resource type="Texture2D" uid="uid://pqa5y1f0cfmc" path="res://test_sprites/AssassinAttackBasic-Sheet.png" id="4_odjad"]
+[ext_resource type="Texture2D" uid="uid://4angwm81tp4j" path="res://test_sprites/AssassinShuriken-Running-Sheet.png" id="6_on2jo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3wt01"]
 size = Vector2(19.9293, 47)
@@ -26,7 +27,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Attack/AttackArea:disabled")
+tracks/1/path = NodePath("BasicAttack/AttackArea:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -37,7 +38,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_7ko5h"]
-resource_name = "ability_one"
+resource_name = "ability_one_idle"
 length = 0.4
 step = 0.05
 tracks/0/type = "value"
@@ -84,6 +85,103 @@ tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0.39903),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"parameters/conditions/ability_one", false],
+"method": &"set"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AbilityOne")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"throw"
+}]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AbilityOne")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.25),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"throw"
+}]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("AbilityOne")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"throw"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_42p6g"]
+resource_name = "ability_one_running"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_on2jo")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PlayerSprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PlayerSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PlayerAnimation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [&"parameters/conditions/ability_one", false],
@@ -190,7 +288,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Attack/AttackArea:disabled")
+tracks/4/path = NodePath("BasicAttack/AttackArea:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -322,8 +420,8 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_t4mqy"]
-resource_name = "move"
-length = 0.6
+resource_name = "running"
+length = 0.3
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -356,7 +454,7 @@ tracks/2/path = NodePath("PlayerSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [5, 0, 1, 2, 3, 4]
@@ -377,19 +475,23 @@ tracks/3/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vsv5j"]
 _data = {
 "RESET": SubResource("Animation_a80pq"),
-"ability_one": SubResource("Animation_7ko5h"),
+"ability_one_idle": SubResource("Animation_7ko5h"),
+"ability_one_running": SubResource("Animation_42p6g"),
 "basic_attack": SubResource("Animation_bvv2r"),
 "falling": SubResource("Animation_2nka6"),
 "idle": SubResource("Animation_gjgvq"),
 "jumping": SubResource("Animation_kgomm"),
-"move": SubResource("Animation_t4mqy")
+"running": SubResource("Animation_t4mqy")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qpmh7"]
 animation = &"basic_attack"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w68wa"]
-animation = &"ability_one"
+animation = &"ability_one_idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v4wmy"]
+animation = &"ability_one_running"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c5383"]
 animation = &"falling"
@@ -401,7 +503,7 @@ animation = &"idle"
 animation = &"jumping"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7rydx"]
-animation = &"move"
+animation = &"running"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3u2xr"]
 advance_mode = 2
@@ -462,10 +564,6 @@ advance_condition = &"is_falling"
 advance_mode = 2
 advance_condition = &"ability_one"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_enrob"]
-advance_mode = 2
-advance_condition = &"ability_one"
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0kxgu"]
 advance_mode = 2
 advance_condition = &"ability_one"
@@ -478,28 +576,38 @@ advance_condition = &"ability_one"
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2rkhy"]
+advance_mode = 2
+advance_condition = &"ability_one"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_lj0uk"]
+switch_mode = 2
+advance_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_fhiqq"]
 states/BasicAttack/node = SubResource("AnimationNodeAnimation_qpmh7")
 states/BasicAttack/position = Vector2(326, 375.5)
 states/End/position = Vector2(959, 199)
 states/Start/position = Vector2(189, 199)
-states/ability_one/node = SubResource("AnimationNodeAnimation_w68wa")
-states/ability_one/position = Vector2(819, 375.5)
+states/ability_one_idle/node = SubResource("AnimationNodeAnimation_w68wa")
+states/ability_one_idle/position = Vector2(819, 384.5)
+states/ability_one_running/node = SubResource("AnimationNodeAnimation_v4wmy")
+states/ability_one_running/position = Vector2(1018, 384.5)
 states/falling/node = SubResource("AnimationNodeAnimation_c5383")
 states/falling/position = Vector2(326, 42)
 states/idle/node = SubResource("AnimationNodeAnimation_b6y62")
 states/idle/position = Vector2(326, 199)
 states/jumping/node = SubResource("AnimationNodeAnimation_85epw")
 states/jumping/position = Vector2(819, 42)
-states/move/node = SubResource("AnimationNodeAnimation_7rydx")
-states/move/position = Vector2(819, 199)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_3u2xr"), "idle", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_ttjyw"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_j2cnl"), "move", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_trwt6"), "move", "idle", SubResource("AnimationNodeStateMachineTransition_6hld3"), "BasicAttack", "idle", SubResource("AnimationNodeStateMachineTransition_mdnuj"), "falling", "idle", SubResource("AnimationNodeStateMachineTransition_7cxhc"), "falling", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_ijsi7"), "move", "falling", SubResource("AnimationNodeStateMachineTransition_me00d"), "move", "jumping", SubResource("AnimationNodeStateMachineTransition_iw40x"), "jumping", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_cy7ig"), "jumping", "idle", SubResource("AnimationNodeStateMachineTransition_1ddcr"), "idle", "jumping", SubResource("AnimationNodeStateMachineTransition_8bmwi"), "idle", "falling", SubResource("AnimationNodeStateMachineTransition_saj1t"), "idle", "ability_one", SubResource("AnimationNodeStateMachineTransition_q8j63"), "move", "ability_one", SubResource("AnimationNodeStateMachineTransition_enrob"), "jumping", "ability_one", SubResource("AnimationNodeStateMachineTransition_0kxgu"), "falling", "ability_one", SubResource("AnimationNodeStateMachineTransition_60g2w"), "ability_one", "idle", SubResource("AnimationNodeStateMachineTransition_sq1h6")]
-graph_offset = Vector2(0, 168.6)
+states/running/node = SubResource("AnimationNodeAnimation_7rydx")
+states/running/position = Vector2(819, 199)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_3u2xr"), "idle", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_ttjyw"), "idle", "running", SubResource("AnimationNodeStateMachineTransition_j2cnl"), "running", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_trwt6"), "running", "idle", SubResource("AnimationNodeStateMachineTransition_6hld3"), "BasicAttack", "idle", SubResource("AnimationNodeStateMachineTransition_mdnuj"), "falling", "idle", SubResource("AnimationNodeStateMachineTransition_7cxhc"), "falling", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_ijsi7"), "running", "falling", SubResource("AnimationNodeStateMachineTransition_me00d"), "running", "jumping", SubResource("AnimationNodeStateMachineTransition_iw40x"), "jumping", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_cy7ig"), "jumping", "idle", SubResource("AnimationNodeStateMachineTransition_1ddcr"), "idle", "jumping", SubResource("AnimationNodeStateMachineTransition_8bmwi"), "idle", "falling", SubResource("AnimationNodeStateMachineTransition_saj1t"), "idle", "ability_one_idle", SubResource("AnimationNodeStateMachineTransition_q8j63"), "jumping", "ability_one_idle", SubResource("AnimationNodeStateMachineTransition_0kxgu"), "falling", "ability_one_idle", SubResource("AnimationNodeStateMachineTransition_60g2w"), "ability_one_idle", "idle", SubResource("AnimationNodeStateMachineTransition_sq1h6"), "running", "ability_one_running", SubResource("AnimationNodeStateMachineTransition_2rkhy"), "ability_one_running", "running", SubResource("AnimationNodeStateMachineTransition_lj0uk")]
+graph_offset = Vector2(157, 114.638)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bbnat"]
 size = Vector2(78.7205, 30)
 
-[node name="Test_Character" type="Node2D"]
+[node name="TestCharacter" type="Node2D"]
 position = Vector2(-15, 0)
 
 [node name="PlayerBody" type="PlayerBody" parent="."]
@@ -514,7 +622,7 @@ position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_3wt01")
 
 [node name="HealthComponent" type="HealthComponent" parent="PlayerBody"]
-max_health = 200
+max_health = 100
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerBody"]
 libraries = {
@@ -537,14 +645,21 @@ parameters/conditions/not_falling = true
 parameters/conditions/not_jumping = true
 parameters/conditions/not_moving = true
 
-[node name="Attack" type="BasicAttack" parent="PlayerBody"]
-damage = 10
-knockback = 2
+[node name="BasicAttack" type="BasicAttack" parent="PlayerBody"]
+damage = 100
+knockback = 20.0
 position = Vector2(0, 5)
 
-[node name="AttackArea" type="CollisionShape2D" parent="PlayerBody/Attack"]
+[node name="AttackArea" type="AttackArea" parent="PlayerBody/BasicAttack"]
 position = Vector2(18.4346, 0)
 shape = SubResource("RectangleShape2D_bbnat")
 
 [node name="Camera2D" type="Camera2D" parent="PlayerBody"]
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
+
+[node name="AbilityOne" type="AbilityOne" parent="PlayerBody"]
+damage = 50
+knockback = 10.0
+
+[node name="ProjectileMarker" type="Marker2D" parent="PlayerBody/AbilityOne"]
+position = Vector2(15.9434, 0)
