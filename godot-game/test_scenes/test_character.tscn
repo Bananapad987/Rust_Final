@@ -611,7 +611,7 @@ size = Vector2(78.7205, 30)
 position = Vector2(-15, 0)
 
 [node name="PlayerBody" type="PlayerBody" parent="."]
-base_movespeed = 500.0
+base_movespeed = 700.0
 base_jumpspeed = 500.0
 base_fallspeed = 100.0
 max_fallspeed = 500.0
@@ -655,7 +655,8 @@ position = Vector2(18.4346, 0)
 shape = SubResource("RectangleShape2D_bbnat")
 
 [node name="Camera2D" type="Camera2D" parent="PlayerBody"]
-zoom = Vector2(2, 2)
+zoom = Vector2(2.7, 2.7)
+limit_bottom = 150
 
 [node name="AbilityOne" type="AbilityOne" parent="PlayerBody"]
 damage = 50

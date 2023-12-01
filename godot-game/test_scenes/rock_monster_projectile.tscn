@@ -17,3 +17,4 @@ texture = ExtResource("1_wmvwb")
 
 [node name="ProjectileTimer" type="Timer" parent="."]
 one_shot = true
+autostart = true
