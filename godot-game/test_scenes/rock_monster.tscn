@@ -172,7 +172,7 @@ position = Vector2(-1, -1)
 shape = SubResource("RectangleShape2D_ifg5e")
 
 [node name="HealthComponent" type="HealthComponent" parent="MonsterBody"]
-max_health = 500
+max_health = 600
 
 [node name="Sprite2D" type="Sprite2D" parent="MonsterBody"]
 position = Vector2(0, -4)
@@ -196,7 +196,7 @@ autostart = true
 
 [node name="RockMonsterAttack" type="RockMonsterAttack" parent="MonsterBody"]
 damage = 10
-knockback = 20.0
+knockback = 40.0
 position = Vector2(0, 7)
 
 [node name="ProjectileMarker" type="Marker2D" parent="MonsterBody/RockMonsterAttack"]

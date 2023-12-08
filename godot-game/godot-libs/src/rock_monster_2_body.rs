@@ -1,11 +1,12 @@
 use godot::prelude::*;
 use godot::engine::*;
+use crate::ground_area::GroundArea;
 use crate::health_component::HealthComponent;
 use crate::attack_struct::Attack;
 
 #[derive(GodotClass)]
 #[class(base=CharacterBody2D)]
-pub struct PlayerBody {
+pub struct RockMonster2Body {
     #[export]
     base_movespeed : f32,
     curr_movespeed : f32,
@@ -20,16 +21,19 @@ pub struct PlayerBody {
     #[export]
     max_fallspeed : f32,
 
+    #[var]
+    moving : bool,
+
     #[base]
     pub base: Base<CharacterBody2D>,
 }
 
 #[godot_api]
-impl PlayerBody {
+impl RockMonster2Body {
     #[func]
     pub fn damage(&mut self, attack : Gd<Attack>) {
         let curr_pos = self.base.get_position();
-        let new_pos = curr_pos + Vector2::new(attack.bind().knockback * attack.bind().direction.x, attack.bind().knockback * (-attack.bind().direction.y - 0.3));
+        let new_pos = curr_pos + Vector2::new(attack.bind().knockback * attack.bind().direction.x, attack.bind().knockback * attack.bind().direction.y);
         self.base.set_position(new_pos);
 
         if let Some(node) = self.base.get_node("HealthComponent".into()) {
@@ -38,18 +42,24 @@ impl PlayerBody {
             }
         }
     }
+
+    #[func]
+    pub fn change_move(&mut self) {
+        self.moving = !self.moving;
+    }
 }
 
 #[godot_api]
-impl ICharacterBody2D for PlayerBody {
+impl ICharacterBody2D for RockMonster2Body {
     fn init(base: Base<CharacterBody2D>) -> Self {
-        PlayerBody {
+        RockMonster2Body {
             base_movespeed : 0.0,
             curr_movespeed : 0.0,
             base_jumpspeed : 0.0,
             curr_jumpspeed : 0.0,
             base_fallspeed : 0.0,
             max_fallspeed : 0.0,
+            moving : false,
             base,
         }
     }
@@ -57,37 +67,45 @@ impl ICharacterBody2D for PlayerBody {
     fn ready(&mut self) {
         self.curr_movespeed = self.base_movespeed;
         self.curr_jumpspeed = self.base_jumpspeed;
-        self.base.set_velocity(Vector2::ZERO);
     }
 
-    fn physics_process(&mut self, delta: f64) {
+    fn physics_process(&mut self, _delta: f64) {
         let curr_velocity = self.base.get_velocity();
         let mut new_velocity = curr_velocity;
-        let curr_pos = self.base.get_position();
-        let mut new_pos = curr_pos;
 
         if !self.base.is_on_floor() {
             new_velocity += Vector2::new(0.0, self.base_fallspeed);
         } else {
             new_velocity = Vector2::new(new_velocity.x, self.base_fallspeed);
         }
+        if self.moving {
+            if let Some(node) = self.base.get_node("Sprite2D".into()) {
+                if let Ok(mut sprite) = node.try_cast::<Sprite2D>() {
+                    let flip_h : bool = sprite.get("flip_h".into()).to();
 
-        let input = Input::singleton();
-        if input.is_action_pressed("move_right".into()) {
-            new_pos += Vector2::new(self.curr_movespeed * delta as f32, 0.0);
-        } else if input.is_action_pressed("move_left".into()) {
-            new_pos -= Vector2::new(self.curr_movespeed * delta as f32, 0.0);
-        } 
+                    if let Some(node) = self.base.get_node("LeftGroundArea".into()) {
+                        if let Ok(area) = node.try_cast::<GroundArea>() {
+                            if !(area.bind().get_is_ground()) && self.base.is_on_floor() {
+                                sprite.set("flip_h".into(), (!flip_h).to_variant());
+                            }
+                        }
+                    }
 
-        if input.is_action_pressed("move_up".into()) && self.base.is_on_floor() {
-            new_velocity -= Vector2::new(0.0, self.curr_jumpspeed);
-        }
-        if input.is_action_pressed("move_down".into()) && new_velocity.y < self.max_fallspeed {
-            new_velocity += Vector2::new(0.0, self.curr_jumpspeed);
+                    let flip_h : bool = sprite.get("flip_h".into()).to();
+                    
+                    if flip_h {
+                        new_velocity = Vector2::new(self.curr_movespeed, new_velocity.y);
+                    } else {
+                        new_velocity = Vector2::new(-self.curr_movespeed, new_velocity.y);
+                    }
+                }
+            }
+        } else {
+            new_velocity = Vector2::new(0.0, new_velocity.y);
         }
 
         self.base.set_velocity(new_velocity);
-        self.base.set_position(new_pos);
         self.base.move_and_slide();
     }
+
 }
