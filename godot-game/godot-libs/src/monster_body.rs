@@ -66,9 +66,9 @@ impl ICharacterBody2D for MonsterBody {
         //let mut new_pos = curr_pos;
 
         if !self.base.is_on_floor() {
-            new_velocity += Vector2::new(0.0, 20.0);
+            new_velocity += Vector2::new(0.0, self.base_fallspeed);
         } else {
-            new_velocity = Vector2::new(new_velocity.x, 20.0);
+            new_velocity = Vector2::new(new_velocity.x, self.base_fallspeed);
         }
 
         self.base.set_velocity(new_velocity);
