@@ -17,3 +17,5 @@ mod rock_monster_projectile;
 mod rock_monster_attack;
 mod rock_monster_animation;
 mod attack_area;
+mod rock_monster_2_attack;
+mod rock_monster_2_body;

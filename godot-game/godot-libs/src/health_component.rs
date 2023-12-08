@@ -16,7 +16,6 @@ impl HealthComponent {
     #[func]
     pub fn take_damage(&mut self, damage : i32) {
         self.curr_health -= damage;
-        godot_print!("curr_hp: {}", self.curr_health);
     }
 }
 

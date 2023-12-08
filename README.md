@@ -1,6 +1,6 @@
 Group Name : TBD
 
-Group member names and NetIDs : Chi Jay Xu (cjxu2)
+Group member names and NetIDs : Chi Jay Xu (cjxu2), David Dai (ddai20)
 
 Project Introduction : We are planning on building a small platformer using Godot and rust.
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cf43dvoac2qoe"]
+[gd_scene load_steps=10 format=3 uid="uid://cf43dvoac2qoe"]
 
 [ext_resource type="Texture2D" uid="uid://df51qo6ucp2ny" path="res://test_sprites/Tilemap-Dirt.png" id="1_gw672"]
 [ext_resource type="PackedScene" uid="uid://dquxaciijncrl" path="res://test_scenes/test_character.tscn" id="2_wpd7k"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dxoxa5j2cg23h" path="res://test_sprites/Clouds.png" id="4_h67er"]
 [ext_resource type="Texture2D" uid="uid://rua0y4ur8e7c" path="res://test_sprites/BlueSky.png" id="4_l3kke"]
 [ext_resource type="Texture2D" uid="uid://dlacm6f05lh8q" path="res://test_sprites/Islands.png" id="5_8d3ys"]
+[ext_resource type="PackedScene" uid="uid://bauakvcggl1gx" path="res://test_scenes/rock_monster_two.tscn" id="7_kdkbl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wu38o"]
 texture = ExtResource("1_gw672")
@@ -181,4 +182,13 @@ position = Vector2(9096, -60)
 position = Vector2(9042, -60)
 
 [node name="RockMonster3" parent="." instance=ExtResource("3_a1bdr")]
-position = Vector2(9068, -103)
+position = Vector2(8989, -59)
+
+[node name="RockMonsterTwo" parent="." instance=ExtResource("7_kdkbl")]
+position = Vector2(3031, -63)
+
+[node name="RockMonsterTwo2" parent="." instance=ExtResource("7_kdkbl")]
+position = Vector2(3790, -132)
+
+[node name="RockMonsterTwo3" parent="." instance=ExtResource("7_kdkbl")]
+position = Vector2(439, -260)

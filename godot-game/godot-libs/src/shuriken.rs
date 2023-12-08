@@ -2,6 +2,7 @@ use godot::prelude::*;
 use godot::engine::*;
 use crate::monster_body::MonsterBody;
 use crate::attack_struct::Attack;
+use crate::rock_monster_2_body::RockMonster2Body;
 
 #[derive(GodotClass)]
 #[class(base=Area2D)]
@@ -33,6 +34,13 @@ impl Shuriken {
             let attack = Attack{damage : self.damage, knockback : self.knockback, direction : (curr_pos - body_pos).normalized()};
             monster_body.bind_mut().damage(Gd::from_object(attack));
             self.base.queue_free();
+        }
+        
+        if let Ok(mut monster_body) = body.clone().try_cast::<RockMonster2Body>() {
+            let curr_pos = self.base.get_position();
+            let body_pos = body.get_position();
+            let attack = Attack{damage : self.damage, knockback : self.knockback, direction : (curr_pos - body_pos).normalized()};
+            monster_body.bind_mut().damage(Gd::from_object(attack));
         }
     }
 }
