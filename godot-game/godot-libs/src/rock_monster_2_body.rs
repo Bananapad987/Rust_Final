@@ -1,6 +1,5 @@
 use godot::prelude::*;
 use godot::engine::*;
-use crate::ground_area::GroundArea;
 use crate::health_component::HealthComponent;
 use crate::attack_struct::Attack;
 
@@ -81,16 +80,6 @@ impl ICharacterBody2D for RockMonster2Body {
         if self.moving {
             if let Some(node) = self.base.get_node("Sprite2D".into()) {
                 if let Ok(mut sprite) = node.try_cast::<Sprite2D>() {
-                    let flip_h : bool = sprite.get("flip_h".into()).to();
-
-                    if let Some(node) = self.base.get_node("LeftGroundArea".into()) {
-                        if let Ok(area) = node.try_cast::<GroundArea>() {
-                            if !(area.bind().get_is_ground()) && self.base.is_on_floor() {
-                                sprite.set("flip_h".into(), (!flip_h).to_variant());
-                            }
-                        }
-                    }
-
                     let flip_h : bool = sprite.get("flip_h".into()).to();
                     
                     if flip_h {

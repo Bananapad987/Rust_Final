@@ -15,3 +15,5 @@ After that, we will focus on coding everything probably in this order: Player Le
 Those are the main components and I think that once we finish those, the rest will be easy (or at least easier).
 
 Possible Challenges : We have no idea how Godot works so that is going to be a bit difficult. However, with a few tutorials, I think we will make it through!
+
+NOTE: Presentation is in the Run.md drive link!

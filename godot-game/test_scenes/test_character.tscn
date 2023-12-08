@@ -602,7 +602,7 @@ states/jumping/position = Vector2(819, 42)
 states/running/node = SubResource("AnimationNodeAnimation_7rydx")
 states/running/position = Vector2(819, 199)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_3u2xr"), "idle", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_ttjyw"), "idle", "running", SubResource("AnimationNodeStateMachineTransition_j2cnl"), "running", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_trwt6"), "running", "idle", SubResource("AnimationNodeStateMachineTransition_6hld3"), "BasicAttack", "idle", SubResource("AnimationNodeStateMachineTransition_mdnuj"), "falling", "idle", SubResource("AnimationNodeStateMachineTransition_7cxhc"), "falling", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_ijsi7"), "running", "falling", SubResource("AnimationNodeStateMachineTransition_me00d"), "running", "jumping", SubResource("AnimationNodeStateMachineTransition_iw40x"), "jumping", "BasicAttack", SubResource("AnimationNodeStateMachineTransition_cy7ig"), "jumping", "idle", SubResource("AnimationNodeStateMachineTransition_1ddcr"), "idle", "jumping", SubResource("AnimationNodeStateMachineTransition_8bmwi"), "idle", "falling", SubResource("AnimationNodeStateMachineTransition_saj1t"), "idle", "ability_one_idle", SubResource("AnimationNodeStateMachineTransition_q8j63"), "jumping", "ability_one_idle", SubResource("AnimationNodeStateMachineTransition_0kxgu"), "falling", "ability_one_idle", SubResource("AnimationNodeStateMachineTransition_60g2w"), "ability_one_idle", "idle", SubResource("AnimationNodeStateMachineTransition_sq1h6"), "running", "ability_one_running", SubResource("AnimationNodeStateMachineTransition_2rkhy"), "ability_one_running", "running", SubResource("AnimationNodeStateMachineTransition_lj0uk")]
-graph_offset = Vector2(157, 114.638)
+graph_offset = Vector2(127, 1.638)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bbnat"]
 size = Vector2(78.7205, 30)
@@ -630,8 +630,8 @@ libraries = {
 }
 
 [node name="PlayerSprite" type="Sprite2D" parent="PlayerBody"]
-texture = ExtResource("4_odjad")
-hframes = 9
+texture = ExtResource("6_on2jo")
+hframes = 6
 
 [node name="PlayerAnimation" type="PlayerAnimation" parent="PlayerBody"]
 tree_root = SubResource("AnimationNodeStateMachine_fhiqq")
